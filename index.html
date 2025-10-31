@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>周五下班倒计时</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⏰</text></svg>">
+    <title>自定义下班倒计时</title>
     <style>
         :root {
             --primary: #3498db;
@@ -40,28 +39,28 @@
         }
         
         .header {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             color: white;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
         
         .header h1 {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             margin-bottom: 10px;
         }
         
         .header p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             opacity: 0.9;
         }
         
         .card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            padding: 40px 30px;
+            padding: 30px 25px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(10px);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             animation: fadeIn 1s ease;
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
@@ -71,20 +70,110 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        .settings {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease 0.2s both;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .settings h2 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .setting-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .setting-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex: 1;
+            min-width: 180px;
+        }
+        
+        label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
         .countdown {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
-            margin: 30px 0;
+            margin: 25px 0;
         }
         
         .time-unit {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 25px 15px;
-            border-radius: 15px;
-            min-width: 140px;
+            padding: 20px 15px;
+            border-radius: 12px;
+            min-width: 120px;
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             position: relative;
@@ -97,7 +186,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
+            height: 3px;
             background: rgba(255, 255, 255, 0.5);
         }
         
@@ -107,21 +196,21 @@
         }
         
         .time-value {
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             font-weight: 700;
             margin-bottom: 5px;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
         
         .time-label {
-            font-size: 1.2rem;
+            font-size: 1rem;
             opacity: 0.9;
             font-weight: 500;
         }
         
         .message {
-            margin-top: 20px;
-            font-size: 1.3rem;
+            margin-top: 15px;
+            font-size: 1.1rem;
             color: var(--dark);
             line-height: 1.6;
         }
@@ -134,24 +223,24 @@
         .weekend-info {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
-            padding: 25px;
+            padding: 20px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
-            animation: fadeIn 1s ease 0.2s both;
+            animation: fadeIn 1s ease 0.4s both;
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .weekend-info h2 {
             color: var(--dark);
-            margin-bottom: 20px;
-            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
         }
         
         .progress-container {
             background: var(--light);
-            border-radius: 10px;
-            height: 20px;
-            margin: 20px 0;
+            border-radius: 8px;
+            height: 16px;
+            margin: 15px 0;
             overflow: hidden;
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
         }
@@ -161,36 +250,37 @@
             background: linear-gradient(90deg, var(--success), #27ae60);
             width: 0%;
             transition: width 0.5s ease;
-            border-radius: 10px;
+            border-radius: 8px;
         }
         
         .week-stats {
             display: flex;
             justify-content: space-around;
-            margin-top: 20px;
-            font-size: 1rem;
+            margin-top: 15px;
+            font-size: 0.9rem;
         }
         
         .stat {
-            padding: 10px;
+            padding: 8px;
         }
         
         .stat-value {
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--primary);
         }
         
         .motivation {
-            margin-top: 20px;
+            margin-top: 15px;
             font-style: italic;
             color: #7f8c8d;
+            font-size: 0.9rem;
         }
         
         .floating {
             position: absolute;
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: rgba(255, 255, 255, 0.15);
             border-radius: 50%;
             animation: float 20s infinite linear;
@@ -205,29 +295,37 @@
             100% { transform: translate(0, 0) rotate(360deg); }
         }
         
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
             }
             
             .time-unit {
-                min-width: 110px;
-                padding: 20px 10px;
+                min-width: 100px;
+                padding: 15px 10px;
             }
             
             .time-value {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
             }
             
             .countdown {
                 gap: 10px;
             }
+            
+            .setting-group {
+                flex-direction: column;
+            }
+            
+            .setting-item {
+                min-width: 100%;
+            }
         }
         
         .github-info {
-            margin-top: 20px;
+            margin-top: 15px;
             color: white;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             opacity: 0.8;
         }
         
@@ -246,12 +344,31 @@
     
     <div class="container">
         <div class="header">
-            <h1>周五下班倒计时</h1>
-            <p>实时显示距离周末还有多久</p>
+            <h1>自定义下班倒计时</h1>
+            <p>设置您自己的目标时间，实时查看倒计时</p>
+        </div>
+        
+        <div class="settings">
+            <h2>设置目标时间</h2>
+            <div class="setting-group">
+                <div class="setting-item">
+                    <label for="target-date">目标日期</label>
+                    <input type="date" id="target-date">
+                </div>
+                <div class="setting-item">
+                    <label for="target-time">目标时间</label>
+                    <input type="time" id="target-time" value="18:00">
+                </div>
+            </div>
+            <div class="quick-buttons">
+                <button class="btn" id="friday-btn">本周五 18:00</button>
+                <button class="btn" id="today-btn">今天 18:00</button>
+                <button class="btn btn-secondary" id="reset-btn">重置</button>
+            </div>
         </div>
         
         <div class="card">
-            <h2>距离周五18:00下班还有</h2>
+            <h2>距离目标时间还有</h2>
             <div class="countdown">
                 <div class="time-unit">
                     <div class="time-value" id="hours">00</div>
@@ -267,9 +384,9 @@
                 </div>
             </div>
             <div class="message">
-                坚持就是胜利！距离周末还有 <span class="highlight" id="total-hours">0</span> 小时
+                目标时间: <span class="highlight" id="target-display">未设置</span>
             </div>
-            <div class="motivation" id="motivation-text">加油，您已经做得很棒了！</div>
+            <div class="motivation" id="motivation-text">请设置目标时间开始倒计时</div>
         </div>
         
         <div class="weekend-info">
@@ -295,7 +412,7 @@
         </div>
         
         <div class="github-info">
-            <p>本页面使用 GitHub Pages 部署 | <a href="https://github.com/yourusername/your-repo" target="_blank">查看源代码</a></p>
+            <p>本页面使用 GitHub Pages 部署 | <a href="#" id="github-link">查看源代码</a></p>
         </div>
     </div>
 
@@ -305,77 +422,198 @@
             "加油，您已经做得很棒了！",
             "坚持就是胜利！",
             "每一天都是新的开始！",
-            "您离周末又近了一步！",
+            "您离目标又近了一步！",
             "保持专注，时间会过得很快！",
-            "完成工作后就可以享受周末了！",
+            "完成工作后就可以放松了！",
             "您正在进步，继续保持！",
             "今天也是努力工作的一天！"
         ];
         
-        function updateCountdown() {
-            const now = new Date();
-            const currentDay = now.getDay(); // 0是周日，1是周一，...，5是周五
-            const currentHour = now.getHours();
-            const currentMinute = now.getMinutes();
-            const currentSecond = now.getSeconds();
+        // 目标时间变量
+        let targetDateTime = null;
+        
+        // DOM 元素
+        const targetDateInput = document.getElementById('target-date');
+        const targetTimeInput = document.getElementById('target-time');
+        const fridayBtn = document.getElementById('friday-btn');
+        const todayBtn = document.getElementById('today-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const targetDisplay = document.getElementById('target-display');
+        const motivationText = document.getElementById('motivation-text');
+        
+        // 初始化
+        function init() {
+            // 设置日期输入的最小值为今天
+            const today = new Date();
+            targetDateInput.min = formatDate(today);
             
-            // 计算下一个周五18:00
-            let daysUntilFriday;
-            if (currentDay < 5) {
-                // 如果是周一到周四
-                daysUntilFriday = 5 - currentDay;
-            } else if (currentDay === 5 && currentHour < 18) {
-                // 如果是周五但还没到18:00
-                daysUntilFriday = 0;
-            } else {
-                // 如果是周五18:00后或周末
-                daysUntilFriday = 5 - currentDay + 7;
+            // 设置默认日期为下一个周五
+            setNextFriday();
+            
+            // 添加事件监听器
+            targetDateInput.addEventListener('change', validateAndUpdateTarget);
+            targetTimeInput.addEventListener('change', validateAndUpdateTarget);
+            fridayBtn.addEventListener('click', setNextFriday);
+            todayBtn.addEventListener('click', setToday);
+            resetBtn.addEventListener('click', resetCountdown);
+            
+            // 开始倒计时
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+        
+        // 验证并更新目标时间
+        function validateAndUpdateTarget() {
+            if (!targetDateInput.value) {
+                return;
             }
             
-            // 计算目标时间
-            const targetTime = new Date(now);
-            targetTime.setDate(now.getDate() + daysUntilFriday);
-            targetTime.setHours(18, 0, 0, 0);
+            const selectedDate = new Date(targetDateInput.value);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
             
-            // 计算时间差
-            const timeDiff = targetTime - now;
+            // 如果选择的日期是今天
+            if (selectedDate.getTime() === today.getTime()) {
+                const now = new Date();
+                const selectedTime = targetTimeInput.value.split(':');
+                const selectedHours = parseInt(selectedTime[0]);
+                const selectedMinutes = parseInt(selectedTime[1]);
+                
+                // 如果选择的时间早于当前时间
+                if (selectedHours < now.getHours() || 
+                   (selectedHours === now.getHours() && selectedMinutes <= now.getMinutes())) {
+                    // 设置为当前时间+30分钟
+                    const newTime = new Date(now);
+                    newTime.setMinutes(now.getMinutes() + 30);
+                    targetTimeInput.value = formatTime(newTime);
+                    
+                    // 显示提示
+                    motivationText.textContent = "时间已调整为当前时间后30分钟";
+                    setTimeout(() => {
+                        motivationText.textContent = "请设置目标时间开始倒计时";
+                    }, 3000);
+                }
+            }
             
-            // 如果已经是周五18:00或之后，显示0
+            updateTargetDateTime();
+        }
+        
+        // 设置下一个周五
+        function setNextFriday() {
+            const now = new Date();
+            const currentDay = now.getDay(); // 0是周日，5是周五
+            let daysUntilFriday = 5 - currentDay;
+            
+            if (currentDay > 5 || (currentDay === 5 && now.getHours() >= 18)) {
+                daysUntilFriday += 7;
+            }
+            
+            const nextFriday = new Date(now);
+            nextFriday.setDate(now.getDate() + daysUntilFriday);
+            
+            // 设置日期输入
+            targetDateInput.value = formatDate(nextFriday);
+            targetTimeInput.value = "18:00";
+            
+            updateTargetDateTime();
+        }
+        
+        // 设置今天
+        function setToday() {
+            const now = new Date();
+            
+            // 设置日期输入
+            targetDateInput.value = formatDate(now);
+            
+            // 如果当前时间已经超过18:00，设置为明天
+            if (now.getHours() >= 18) {
+                const tomorrow = new Date(now);
+                tomorrow.setDate(now.getDate() + 1);
+                targetDateInput.value = formatDate(tomorrow);
+            }
+            
+            targetTimeInput.value = "18:00";
+            
+            updateTargetDateTime();
+        }
+        
+        // 重置倒计时
+        function resetCountdown() {
+            targetDateInput.value = "";
+            targetTimeInput.value = "18:00";
+            targetDateTime = null;
+            targetDisplay.textContent = "未设置";
+            motivationText.textContent = "请设置目标时间开始倒计时";
+            
+            // 重置倒计时显示
+            document.getElementById('hours').textContent = '00';
+            document.getElementById('minutes').textContent = '00';
+            document.getElementById('seconds').textContent = '00';
+        }
+        
+        // 更新目标时间
+        function updateTargetDateTime() {
+            if (!targetDateInput.value) {
+                targetDateTime = null;
+                targetDisplay.textContent = "未设置";
+                return;
+            }
+            
+            const date = new Date(targetDateInput.value);
+            const timeParts = targetTimeInput.value.split(':');
+            
+            if (timeParts.length === 2) {
+                date.setHours(parseInt(timeParts[0]), parseInt(timeParts[1]), 0, 0);
+                targetDateTime = date;
+                
+                // 更新显示
+                targetDisplay.textContent = formatDateTime(targetDateTime);
+                
+                // 更新励志语句
+                const randomIndex = Math.floor(Math.random() * motivations.length);
+                motivationText.textContent = motivations[randomIndex];
+            }
+        }
+        
+        // 更新倒计时
+        function updateCountdown() {
+            if (!targetDateTime) {
+                return;
+            }
+            
+            const now = new Date();
+            const timeDiff = targetDateTime - now;
+            
+            // 如果目标时间已过
             if (timeDiff <= 0) {
                 document.getElementById('hours').textContent = '00';
                 document.getElementById('minutes').textContent = '00';
                 document.getElementById('seconds').textContent = '00';
-                document.getElementById('total-hours').textContent = '0';
-                document.getElementById('motivation-text').textContent = "周末到了，好好享受吧！";
+                motivationText.textContent = "目标时间已到！";
                 return;
             }
             
-            // 计算总小时数（包括天数转换的小时）
+            // 计算总小时、分钟、秒（不显示天数）
             const totalHours = Math.floor(timeDiff / (1000 * 60 * 60));
-            
-            // 计算小时、分钟、秒（只显示小时、分钟和秒）
-            const hours = Math.floor(timeDiff / (1000 * 60 * 60));
             const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
             
             // 更新倒计时显示
-            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = totalHours.toString().padStart(2, '0');
             document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
             document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
             
-            // 显示总小时数
-            document.getElementById('total-hours').textContent = totalHours;
-            
-            // 随机显示励志语句
+            // 随机更新励志语句
             if (seconds % 30 === 0) {
                 const randomIndex = Math.floor(Math.random() * motivations.length);
-                document.getElementById('motivation-text').textContent = motivations[randomIndex];
+                motivationText.textContent = motivations[randomIndex];
             }
             
             // 更新周进度
             updateWeekProgress(now);
         }
         
+        // 更新周进度
         function updateWeekProgress(now) {
             const currentDay = now.getDay();
             const currentHour = now.getHours();
@@ -424,11 +662,35 @@
             document.getElementById('week-status').textContent = weekStatus;
         }
         
-        // 初始加载
-        updateCountdown();
+        // 工具函数：格式化日期为 YYYY-MM-DD
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
         
-        // 每秒更新一次
-        setInterval(updateCountdown, 1000);
+        // 工具函数：格式化时间为 HH:MM
+        function formatTime(date) {
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+        
+        // 工具函数：格式化日期时间为可读字符串
+        function formatDateTime(date) {
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return date.toLocaleDateString('zh-CN', options);
+        }
+        
+        // 初始化应用
+        init();
     </script>
 </body>
 </html>
